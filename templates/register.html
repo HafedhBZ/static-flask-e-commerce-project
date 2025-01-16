@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Register</h2>
+            <form method="POST" id="registerForm" onsubmit="return validateForm()">
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="confirm_password" class="form-label">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Register</button>
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="{{ url_for('login') }}" class="small">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Frontend validation function
+    function validateForm() {
+        var email = document.getElementById("email").value;
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        
+        // Validate email format
+        if (!regex.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            alert("Passwords do not match. Please make sure both passwords are identical.");
+            return false;
+        }
+
+        // Additional password strength checks can be added here, if needed
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<style>
+    body {
+        background-image: url('https://img.freepik.com/free-photo/top-view-desk-with-black-friday-gifts_23-2148288216.jpg?t=st=1735839289~exp=1735842889~hmac=8800705ac05ef4421f2be37174e87252194df79eb5ab7e8713f58f2043ebe235&w=740');
+        background-size: cover;
+        background-position: center;
+    }
+    .card {
+        background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for card */
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}

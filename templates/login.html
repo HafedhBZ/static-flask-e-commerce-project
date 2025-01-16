@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Login</h2>
+            <form method="POST" id="loginForm" onsubmit="return validateEmail()">
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="{{ url_for('register') }}" class="small">Create an Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Frontend email validation function
+    function validateEmail() {
+        var email = document.getElementById("email").value;
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!regex.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<style>
+    body {
+        background-image: url('https://img.freepik.com/free-photo/top-view-desk-with-black-friday-gifts_23-2148288216.jpg?t=st=1735839289~exp=1735842889~hmac=8800705ac05ef4421f2be37174e87252194df79eb5ab7e8713f58f2043ebe235&w=740');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+{% endblock %}

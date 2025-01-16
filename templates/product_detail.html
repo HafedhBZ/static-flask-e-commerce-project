@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Product Detail{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <img src="{{ product.image_url }}" alt="{{ product.product_name }}" class="card-img-top img-fluid">
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm p-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">{{ product.product_name }}</h2>
+                    <p class="card-text"><strong>Price:</strong> {{ product.price_count }} $</p>
+                    <p class="card-text">
+                        <strong>Quantity ({{ product.product_quantity_unit }}):</strong> {{ product.product_quantity }}
+                    </p>
+                    <p class="card-text"><strong>Brands:</strong> {{ product.brands }}</p>
+
+                    <!-- Add to Cart Button -->
+<button id="addToCartButton" class="btn btn-primary w-100 mb-3">Add to Cart</button>
+
+<!-- Back to Home Button -->
+<a href="{{ url_for('home') }}" class="btn btn-secondary w-100">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('addToCartButton').addEventListener('click', function () {
+        // Product data to send to the backend
+        const productData = {
+            id: "{{ product.id }}",
+            name: "{{ product.product_name }}"
+        };
+
+        // Send a POST request to the backend
+        fetch("{{ url_for('add_to_cart') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(productData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message); // Notify the user
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
+</script>
+<style>
+    .card-img-top {
+        height: 400px;
+    }
+    body {
+        background-color: #f8f9fa; /* Light grey background for a modern look */
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+

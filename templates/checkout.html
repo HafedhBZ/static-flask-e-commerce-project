@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Checkout</h1>
+
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4">Order Summary</h2>
+        <ul class="list-group mb-4">
+            {% for item in cart %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ item.name }}</span>
+                <span>x {{ item.quantity }}</span>
+            </li>
+            {% endfor %}
+            <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                <strong>Total</strong>
+                <strong>{{ total }} $</strong>
+            </li>
+        </ul>
+
+        <form method="POST">
+            <div class="form-group mb-3">
+                <label for="address" class="form-label">Shipping Address</label>
+                <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="payment" class="form-label">Payment Method</label>
+                <select id="payment" name="payment" class="form-control" required>
+                    <option value="credit_card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cash_on_delivery">Cash on Delivery</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Place Order</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border-radius: 10px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
